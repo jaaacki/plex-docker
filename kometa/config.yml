@@ -6,15 +6,39 @@ libraries:
   Movies:
     collection_files:
       - default: basic
+        template_variables:
+          visible_home: true
+          visible_shared: true
       - default: imdb
+        template_variables:
+          visible_home: true
+          visible_shared: true
       - default: tmdb
+        template_variables:
+          visible_home: true
+          visible_shared: true
       - default: streaming
+        template_variables:
+          visible_home: true
+          visible_shared: true
   TV Shows:
     collection_files:
       - default: basic
+        template_variables:
+          visible_home: true
+          visible_shared: true
       - default: imdb
+        template_variables:
+          visible_home: true
+          visible_shared: true
       - default: tmdb
+        template_variables:
+          visible_home: true
+          visible_shared: true
       - default: streaming
+        template_variables:
+          visible_home: true
+          visible_shared: true
 
 plex:
   # Since Kometa is in the same docker compose network, it can access Plex directly.
