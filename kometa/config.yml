@@ -6,37 +6,37 @@ libraries:
   Movies:
     collection_files:
       - default: basic
-        template_variables:
-          visible_home: true
-          visible_shared: true
       - default: imdb
         template_variables:
+          limit: 100
           visible_home: true
           visible_shared: true
       - default: tmdb
         template_variables:
+          limit: 100
           visible_home: true
           visible_shared: true
       - default: streaming
         template_variables:
+          limit: 100
           visible_home: true
           visible_shared: true
   TV Shows:
     collection_files:
       - default: basic
-        template_variables:
-          visible_home: true
-          visible_shared: true
       - default: imdb
         template_variables:
+          limit: 100
           visible_home: true
           visible_shared: true
       - default: tmdb
         template_variables:
+          limit: 100
           visible_home: true
           visible_shared: true
       - default: streaming
         template_variables:
+          limit: 100
           visible_home: true
           visible_shared: true
 
@@ -64,8 +64,8 @@ settings:
   download_images_locally: false
   show_unmanaged: true
   show_filtered: false
-  show_missing: true
-  show_missing_assets: true
+  show_missing: false           # Disabled to speed up indexing runs
+  show_missing_assets: false    # Disabled to speed up indexing runs
   save_report: false
   run_again_delay: 2
   missing_only_released: false
