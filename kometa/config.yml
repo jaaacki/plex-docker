@@ -7,9 +7,14 @@ libraries:
     collection_files:
       - default: basic
       - default: imdb
+      - default: tmdb
+      - default: streaming
   TV Shows:
     collection_files:
       - default: basic
+      - default: imdb
+      - default: tmdb
+      - default: streaming
 
 plex:
   # Since Kometa is in the same docker compose network, it can access Plex directly.
