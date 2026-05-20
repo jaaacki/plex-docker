@@ -9,16 +9,19 @@ libraries:
       - default: imdb
         template_variables:
           limit: 100
+          builder_limit: 100
           visible_home: true
           visible_shared: true
       - default: tmdb
         template_variables:
           limit: 100
+          builder_limit: 100
           visible_home: true
           visible_shared: true
       - default: streaming
         template_variables:
           limit: 100
+          builder_limit: 100
           visible_home: true
           visible_shared: true
   TV Shows:
@@ -27,16 +30,19 @@ libraries:
       - default: imdb
         template_variables:
           limit: 100
+          builder_limit: 100
           visible_home: true
           visible_shared: true
       - default: tmdb
         template_variables:
           limit: 100
+          builder_limit: 100
           visible_home: true
           visible_shared: true
       - default: streaming
         template_variables:
           limit: 100
+          builder_limit: 100
           visible_home: true
           visible_shared: true
 
