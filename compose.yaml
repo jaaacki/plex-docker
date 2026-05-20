@@ -92,6 +92,23 @@ services:
       start_period: 15s
     restart: unless-stopped
 
+  kometa:
+    image: kometateam/kometa:latest
+    container_name: kometa
+    environment:
+      - TZ=${TZ:-Asia/Singapore}
+      - KOMETA_CONFIG=/config/config.yml
+      - KOMETA_PLEXTOKEN=${PLEX_TOKEN}
+      - KOMETA_TMDBAPIKEY=${TMDB_API_KEY}
+    volumes:
+      - "./kometa:/config:rw"
+    networks:
+      - plex-internal
+    depends_on:
+      plex:
+        condition: service_healthy
+    restart: unless-stopped
+
 networks:
   plex-internal:
     name: plex-internal

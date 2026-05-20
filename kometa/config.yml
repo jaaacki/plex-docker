@@ -1,0 +1,49 @@
+# =============================================================================
+# Kometa Configuration
+# =============================================================================
+
+libraries:
+  Movies:
+    collection_files:
+      - default: basic
+      - default: imdb
+  TV Shows:
+    collection_files:
+      - default: basic
+
+plex:
+  # Since Kometa is in the same docker compose network, it can access Plex directly.
+  url: http://plex:32400
+  token: <<PLEXTOKEN>>
+  timeout: 60
+  clean_bundles: false
+  empty_trash: false
+  optimize: false
+
+tmdb:
+  apikey: <<TMDBAPIKEY>>
+
+settings:
+  cache: true
+  cache_expiration: 30
+  asset_directory: config/assets
+  asset_folders: true
+  asset_depth: 0
+  create_asset_folders: false
+  prioritize_assets: false
+  dimensional_asset_rename: false
+  download_images_locally: false
+  show_unmanaged: true
+  show_filtered: false
+  show_missing: true
+  show_missing_assets: true
+  save_report: false
+  run_again_delay: 2
+  missing_only_released: false
+  only_filter_missing: false
+  show_options: false
+  show_defaults: false
+  show_warning: true
+  show_error: true
+  meta_only: false
+  webhooks: []
