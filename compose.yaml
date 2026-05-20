@@ -1,0 +1,101 @@
+services:
+  plex:
+    image: plexinc/pms-docker:latest
+    container_name: plex
+    environment:
+      - PLEX_UID=${PUID:-1026}
+      - PLEX_GID=${PGID:-100}
+      - TZ=${TZ:-Asia/Singapore}
+      - ADVERTISE_IP=${ADVERTISE_IP:-http://192.168.2.198:32400/}
+      # NVIDIA GPU for HDR tone mapping and NVENC/NVDEC transcoding
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=compute,video,utility
+
+    volumes:
+      - "./config:/config"
+      - "/volume2/movies:/volume2/movies"
+      - "/volume2/movies - chinese:/volume2/movies - chinese"
+      - "/volume2/music:/volume2/music"
+      - "/volume2/opera:/volume2/opera:ro"
+      - "/volume1/downloads:/volume1/downloads/download - station"
+      - "/volume2/tv shows:/volume2/tv shows"
+      - "/volume2/tv shows - chinese:/volume2/tv shows - chinese"
+
+    tmpfs:
+      - /transcode:size=8g,mode=1777
+
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+    ports:
+      - "32400:32400/tcp"
+      - "3005:3005/tcp"
+      - "8324:8324/tcp"
+      - "32469:32469/tcp"
+      - "32410:32410/udp"
+      - "32412:32412/udp"
+      - "32413:32413/udp"
+      - "32414:32414/udp"
+
+    networks:
+      - plex-internal
+
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:32400/identity || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+
+    logging:
+      driver: json-file
+      options:
+        max-size: "50m"
+        max-file: "5"
+
+    restart: always
+
+  mcp-plex:
+    build:
+      context: ./mcp-plex
+      dockerfile: Dockerfile
+    container_name: mcp-plex
+    environment:
+      - PLEX_URL=http://plex:32400
+      - PLEX_TOKEN=${PLEX_TOKEN}
+      - PLEX_EXTERNAL_URL=${PLEX_EXTERNAL_URL:-https://app.plex.tv}
+      - MCP_API_KEY=${MCP_API_KEY}
+      - MCP_PORT=${MCP_PLEX_PORT:-9102}
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+      - LOG_FORMAT=${LOG_FORMAT:-json}
+      - TZ=${TZ:-Asia/Singapore}
+    volumes:
+      - ./data/mcp-logs:/var/log/mcp-plex
+    ports:
+      - "${MCP_PLEX_PORT:-9102}:9102"
+    networks:
+      - plex-internal
+      - mcp-net
+    depends_on:
+      plex:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "python -c \"import urllib.request; urllib.request.urlopen('http://localhost:9102/health')\""]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+    restart: unless-stopped
+
+networks:
+  plex-internal:
+    name: plex-internal
+    driver: bridge
+  mcp-net:
+    external: true
+    name: mcp-net

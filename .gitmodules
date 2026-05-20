@@ -1,0 +1,3 @@
+[submodule "mcp-plex"]
+	path = mcp-plex
+	url = git@github.com:jaaacki/mcp-plex.git

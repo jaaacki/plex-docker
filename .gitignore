@@ -1,0 +1,16 @@
+# Environments and secrets
+.env
+
+# Runtime / state data
+config/
+data/
+tmp/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Agent/editor folders
+.antigravitycli/
+.idea/
+.vscode/
